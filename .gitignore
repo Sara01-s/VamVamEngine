@@ -1,0 +1,11 @@
+
+# vscode files
+*/.vscode
+*/.code-workspace
+
+# objs
+*/obj
+*.o
+
+# annoying windows stuff
+*.ink
