@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# Dynamic library search
 # $1 search e.g. XOpenDisplay
 
 if [ -z $1 ]; then

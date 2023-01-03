@@ -25,24 +25,27 @@ $(patsubst %.c,%.h,$(patsubst %.cpp,%.hpp,$(1)))
 endef
 
 
-APP 	:= game
+APP 	:= libPicoPNG.a
 CFLAGS  := -Wall -pedantic
-CCFLAGS := $(CFLAGS) -std=c++17
+CCFLAGS := $(CFLAGS) -std=c++14
 C       := gcc
 CC      := g++
+AR		:= ar
+ARFLAGS := -crs
+RANLIB  := ranlib
 MKDIR   := mkdir -p
 RM		:= rm
 SRC     := src
 OBJ     := obj
-LIBS    := libs/picoPNG/libPicoPNG.a libs/tinyPTC/libTinyPTC.a -lX11 -L/usr/lib/i386-linux-gnu/libGLX_nvidia.so.0
-LIBSDIR := libs
-INCDIRS := -I$(SRC) -I$(LIBSDIR)
 
-ifdef RELEASE 			#Activar optimizaciones si game es una release (uso: make RELEASE=1) 
-	CCFLAGS += -O3
-else
+ifdef DEBUG 			#Activar debug (uso: make DEBUG=1)
+	CFLAGS  += -g
 	CCFLAGS += -g
+else
+	CFLAGS  += -O3
+	CCFLAGS += -O3
 endif
+
 
 # % = * (cualquier cosa)
 # iname porque es incase sesitive
@@ -52,20 +55,19 @@ ALLOBJ     := $(foreach   F,$(ALLCPPS) $(ALLCS),$(call C2O,$(F)))
 SUBDIRS    := $(shell 	  find $(SRC) -type d)
 OBJSUBDIRS := $(patsubst  $(SRC)%,$(OBJ)%,$(SUBDIRS))
 
-.PHONY: info libs libs-clean libs-cleanall
+.PHONY: info
 
-# APP Depende de los subdirectorios de obj y src/main.cpp
+# Archivar librería
 $(APP) : $(OBJSUBDIRS) $(ALLOBJ)
-# Linkear
-	$(CC) -o $(APP) $(ALLOBJ) $(LIBS)
-
+	$(AR) $(ARFLAGS) $(APP) $(ALLOBJ)
+	$(RANLIB) $(APP)
 
 # $@ = %.0 (producto esperado)
 # $^ = %.c (dependencia)
 
 # foreach var "F" = "file in ..."
-$(foreach F,$(ALLCPPS),$(eval $(call COMPILE,$(CC),$(call C2O,$(F)),$(F),$(call C2H,$(F)),$(CCFLAGS) $(INCDIRS))))
-$(foreach F,$(ALLCS),$(eval $(call COMPILE,$(C),$(call C2O,$(F)),$(F),$(call C2H,$(F)),$(CFLAGS) $(INCDIRS))))
+$(foreach F,$(ALLCPPS),$(eval $(call COMPILE,$(CC),$(call C2O,$(F)),$(F),$(call C2H,$(F)),$(CCFLAGS))))
+$(foreach F,$(ALLCS),$(eval $(call COMPILE,$(C),$(call C2O,$(F)),$(F),$(call C2H,$(F)),$(CFLAGS))))
 
 
 # foreach rules e.g.
@@ -87,10 +89,6 @@ info:
 $(OBJSUBDIRS):
 	$(MKDIR) $(OBJSUBDIRS)
 
-# clean		: elimina *.o
-# cleanall	: eliminar *.o pero NO el ejecutable
-
-
 ## CLEAN RULES
 clean:
 	$(RM) -r "./$(OBJ)"
@@ -98,13 +96,3 @@ clean:
 cleanall: clean
 	$(RM) "./$(APP)"
 	
-## LIB RULES
-libs:
-	$(MAKE) -C $(LIBDIR)
-
-libs-clean:
-	$(MAKE) -C $(LIBDIR) clean
-
-libs-cleanall:
-	$(MAKE) -C $(LIBDIR) cleanall
-

@@ -1,5 +1,5 @@
 extern "C" { 
-    #include "tinyptc.h"
+#include <../libs/tinyPTC/src/linux/tinyptc.h>
 }
 
 #include <cstdint>
@@ -8,11 +8,12 @@ extern "C" {
 constexpr uint32_t R = 0x00FF0000;                      // red   hex
 constexpr uint32_t G = 0x0000FF00;                      // green hex
 constexpr uint32_t B = 0x000000FF;                      // blue  hex
+constexpr uint32_t SCREEN_WIDTH      { 640 };
+constexpr uint32_t SCREEN_HEIGHT     { 360 };
+constexpr uint32_t SCREEN_RESOLUTION { SCREEN_WIDTH * SCREEN_HEIGHT };
 
 
-uint32_t _window[640 * 360];
-
-uint32_t _sprite[8*8] = {
+constexpr uint32_t _sprite[8*8] = {
     G, G, G, G, G, G, G, G,
     G, B, R, R, R, R, B, G,
     G, B, R, G, G, G, B, G,
@@ -23,17 +24,22 @@ uint32_t _sprite[8*8] = {
     G, G, G, G, G, G, G, G
 };
 
+uint32_t* _gameScreen { nullptr };
+
 int main() {
 
-    ptc_open("window", 640, 360);
+    ptc_open("window", SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    for(;;) {
-        for (uint32_t i = 0; i < 640*360; ++i) {
-            _window[i] = R;
+    _gameScreen = new uint32_t[SCREEN_RESOLUTION];
+
+    while (!ptc_process_events()) {
+        
+        for (uint32_t pixel=0; pixel < SCREEN_RESOLUTION; ++pixel) {
+            _gameScreen[pixel] = R;
         }
 
-        uint32_t* screenPtr = _window;
-        uint32_t* spritePtr = _sprite;
+        uint32_t* screenPtr = _gameScreen;
+        const uint32_t* spritePtr = _sprite;
 
         for (uint32_t i=0; i < 8; ++i) {
             for (uint32_t j=0; j < 8; ++j) {
@@ -44,13 +50,18 @@ int main() {
                 ++spritePtr;
             }
 
-            spritePtr += 640 - 4;
+            spritePtr += SCREEN_WIDTH - 8;
         }
 
-        ptc_update(_window);
+        ptc_update(_gameScreen);
     }
 
+        
+
+
     ptc_close();
+
+    delete[] _gameScreen;
 
     return 0;
 }
