@@ -24,21 +24,37 @@ constexpr uint32_t _sprite[8*8] = {
     G, G, G, G, G, G, G, G
 };
 
-uint32_t* _gameScreen { nullptr };
+struct Game_t {
+
+public:
+    Game_t(uint32_t screenWidth, uint32_t screenHeight)
+        : _screen(new uint32_t[screenWidth * screenHeight]) {}
+
+    Game_t(uint32_t screenResolution) 
+        : _screen(new uint32_t[screenResolution]) {}
+
+    ~Game_t() { delete[] _screen; }
+
+    uint32_t* GetScreen() { return _screen; }
+
+private:
+    uint32_t* _screen { nullptr };
+};
+
 
 int main() {
 
     ptc_open("window", SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    _gameScreen = new uint32_t[SCREEN_RESOLUTION];
+    Game_t game (SCREEN_RESOLUTION);
 
     while (!ptc_process_events()) {
         
         for (uint32_t pixel=0; pixel < SCREEN_RESOLUTION; ++pixel) {
-            _gameScreen[pixel] = R;
+            game.GetScreen()[pixel] = R;
         }
 
-        uint32_t* screenPtr = _gameScreen;
+        uint32_t* screenPtr = game.GetScreen();
         const uint32_t* spritePtr = _sprite;
 
         for (uint32_t i=0; i < 8; ++i) {
@@ -53,15 +69,13 @@ int main() {
             spritePtr += SCREEN_WIDTH - 8;
         }
 
-        ptc_update(_gameScreen);
+        ptc_update(game.GetScreen());
     }
 
         
 
 
     ptc_close();
-
-    delete[] _gameScreen;
 
     return 0;
 }
