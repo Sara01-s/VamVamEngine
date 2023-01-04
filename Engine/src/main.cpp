@@ -35,7 +35,7 @@ public:
 
     ~Game_t() { delete[] _screen; }
 
-    uint32_t* GetScreen() { return _screen; }
+    inline uint32_t* GetScreen() { return _screen; }
 
 private:
     uint32_t* _screen { nullptr };
