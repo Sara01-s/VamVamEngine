@@ -27,7 +27,7 @@ endef
 
 APP 	:= libTinyPTC.a
 CFLAGS  := -Wall -pedantic
-CCFLAGS := $(CFLAGS) -std=c++17
+CCFLAGS := $(CFLAGS) -std=c++14
 C       := gcc
 CC      := g++
 AR		:= ar
