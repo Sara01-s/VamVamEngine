@@ -10,7 +10,8 @@
 # annoying windows stuff
 *.ink
 
-# Visual Studio solution
+# Visual Studio
+*.vs
 *.sln
 
 # executable
