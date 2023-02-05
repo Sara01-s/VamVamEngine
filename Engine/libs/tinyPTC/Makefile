@@ -33,7 +33,7 @@ CC      := g++
 AR		:= ar
 ARFLAGS := -crs
 RANLIB  := ranlib
-MKDIR   := mkdir -p
+MKDIR   := mkdir -Path
 RM		:= rm
 SRC     := src
 OBJ     := obj
@@ -49,10 +49,10 @@ endif
 
 # % = * (cualquier cosa)
 # iname porque es incase sesitive
-ALLCPPS    := $(shell 	  find src/ -type f -iname *.cpp)
-ALLCS      := $(shell 	  find src/ -type f -iname *.c)
+ALLCPPS    := $(shell 	  powershell dir src/*.cpp -n)
+ALLCS      := $(shell 	  powershell dir src/*.c -n)
 ALLOBJ     := $(foreach   F,$(ALLCPPS) $(ALLCS),$(call C2O,$(F)))
-SUBDIRS    := $(shell 	  find $(SRC) -type d)
+SUBDIRS    := $(shell 	  powershell Get-ChildItem -Directory -n)
 OBJSUBDIRS := $(patsubst  $(SRC)%,$(OBJ)%,$(SUBDIRS))
 
 .PHONY: info
