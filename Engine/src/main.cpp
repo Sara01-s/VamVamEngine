@@ -1,18 +1,17 @@
-extern "C" { 
-    #include <../libs/tinyPTC/src/tinyptc.h>
-}
-
-#include <memory>
-#include <cstdint>
-#include <iostream>
-#include <exception>
-#include "main.hpp"
-#include "systems/Render.hpp"
+#include <main.hpp>
+#include <systems/Renderer.hpp>
+#include <managers/EntityManager.hpp>
 /*----------------------------------------------------------------------------------------*/
 
-int main() {
+constexpr uint32_t kSCREEN_WIDTH      { 640U };
+constexpr uint32_t kSCREEN_HEIGHT     { 360U };
+constexpr uint32_t kSCREEN_RESOLUTION { kSCREEN_WIDTH * kSCREEN_HEIGHT };
+
+int main(void) {
     try {
-        const SalsaEngine::RenderSystem_t renderSystem { "Mi primer motor owo", 640U, 360U };
+        SalsaEngine::EntityManager_t entityManager {};
+        entityManager.CreateEntity(160, 160, 0x0000FF00U);
+        const SalsaEngine::RenderSystem_t renderSystem { "Mi primer motor owo", 640U, 360U, entityManager };
 
         while(renderSystem.Update());
     }

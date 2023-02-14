@@ -1,0 +1,19 @@
+
+
+void EntityManager_t::CreateEntity(uint32_t width, uint32_t height, uint32_t color) {
+
+    Entity_t createdEntity { width, height };                   // Stack allocated
+
+    std::fill(begin(createdEntity.Sprite), end(createdEntity.Sprite), color);
+
+    _entity.push_back(createdEntity);                           // But now, it gets copied to Heap
+}
+
+// Resolved in EntityManager.cpp by doing:
+
+void EntityManager_t::CreateEntity(uint32_t width, uint32_t height, uint32_t color) {
+                                                                // builds the object inside the vector's reserved memory
+    auto& createdEntity = _entity.emplace_back(width, height);  // "placement new"
+
+    std::fill(begin(createdEntity.Sprite), end(createdEntity.Sprite), color);
+}
