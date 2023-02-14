@@ -10,7 +10,8 @@ constexpr uint32_t kSCREEN_RESOLUTION { kSCREEN_WIDTH * kSCREEN_HEIGHT };
 int main(void) {
     try {
         SalsaEngine::EntityManager_t entityManager {};
-        entityManager.CreateEntity(160, 160, 0x0000FF00U);
+        entityManager.CreateEntity(20, 40, 160, 160, 0x000000FFU);
+        
         const SalsaEngine::RenderSystem_t renderSystem { "Mi primer motor owo", 640U, 360U, entityManager };
 
         while(renderSystem.Update());

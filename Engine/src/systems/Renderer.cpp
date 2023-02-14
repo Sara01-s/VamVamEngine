@@ -26,26 +26,29 @@ RenderSystem_t::~RenderSystem_t() { ptc_close(); }
 void RenderSystem_t::DrawAllEntities() const {
 
     auto& entities { _entityManager.GetEntities() };
+    auto screen { _frameBuffer.get() };                     // creates a "temporal copy of unique_ptr" inside this context by it's raw pointer
 
-    for (const auto& entity: entities) {
-        auto screen = _frameBuffer.get();               // creates a "temporal copy of unique_ptr" inside this context by it's raw pointer
-        
-        screen += (entity.Y * _screenWidth) + entity.X; // Jumping 5 rows in the screen and then adding the displacement in X
-                                                        // Now our screen is pointing to the position of the entity
-        
+    auto getScreenXYPos = [&](const uint32_t xPos, const uint32_t yPos) {
+        return screen + (yPos * _screenWidth) + xPos;
+    };
+
+    auto DrawEntity = [&](const Entity_t& entity) {
+        auto screen = getScreenXYPos(entity.XPos, entity.YPos);
         auto spriteItr = entity.Sprite.data();
-        for (uint32_t entityY{}; entityY < entity.Height; ++entityY) {
+
+        for (uint32_t entityY=0; entityY < entity.Height; ++entityY) {
             std::copy(
-                  spriteItr                             // From the start of the sprite's row
-                , spriteItr + entity.Width              // To the end of the sprite's row
+                spriteItr                                   // From the start of the sprite's row
+                , spriteItr + entity.Width                  // To the end of the sprite's row
                 , screen
             );
 
-            spriteItr += entity.Width;                  // Jump to next row
+            spriteItr += entity.Width;                      // Jump to next row
             screen    += _screenWidth;
         }
+    };
 
-    }
+    std::for_each(begin(entities), end(entities), DrawEntity);
 }
 
 bool RenderSystem_t::Update() const {
