@@ -33,7 +33,7 @@ CC      := g++
 AR		:= ar
 ARFLAGS := -crs
 RANLIB  := ranlib
-MKDIR   := mkdir -Path
+MKDIR   := mkdir -p
 RM		:= rm
 SRC     := src
 OBJ     := obj
@@ -49,15 +49,15 @@ endif
 
 # % = * (cualquier cosa)
 # iname porque es incase sesitive
-ALLCPPS    := $(shell 	  powershell dir src/*.cpp -n)
-ALLCS      := $(shell 	  powershell dir src/*.c -n)
+ALLCPPS    := $(shell     find src/ -iname *.cpp)
+ALLCS      := $(shell 	  find src/ -iname *.c)
 ALLOBJ     := $(foreach   F,$(ALLCPPS) $(ALLCS),$(call C2O,$(F)))
-SUBDIRS    := $(shell 	  powershell Get-ChildItem -Directory -n)
+SUBDIRS    := $(shell 	  find src -type d)
 OBJSUBDIRS := $(patsubst  $(SRC)%,$(OBJ)%,$(SUBDIRS))
 
 .PHONY: info
 
-# Archivar librería
+# Archivar librería compilada
 $(APP) : $(OBJSUBDIRS) $(ALLOBJ)
 	$(AR) $(ARFLAGS) $(APP) $(ALLOBJ)
 	$(RANLIB) $(APP)

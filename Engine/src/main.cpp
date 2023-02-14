@@ -1,64 +1,53 @@
 extern "C" { 
-#include <../libs/tinyPTC/src/linux/tinyptc.h>
+    #include <../libs/tinyPTC/src/tinyptc.h>
 }
 
+#include <memory>
 #include <cstdint>
+#include <iostream>
+#include <exception>
 #include "main.hpp"
-
-constexpr uint32_t R = 0x00FF0000;                      // red   hex
-constexpr uint32_t G = 0x0000FF00;                      // green hex
-constexpr uint32_t B = 0x000000FF;                      // blue  hex
-constexpr uint32_t SCREEN_WIDTH      { 640 };
-constexpr uint32_t SCREEN_HEIGHT     { 360 };
-constexpr uint32_t SCREEN_RESOLUTION { SCREEN_WIDTH * SCREEN_HEIGHT };
+/*----------------------------------------------------------------------------------------*/
 
 
-constexpr uint32_t _sprite[8*8] = {
-    G, G, G, G, G, G, G, G,
-    G, B, R, R, R, R, B, G,
-    G, B, R, G, G, G, B, G,
-    G, B, B, R, G, G, B, G,
-    G, B, B, B, R, R, B, G,
-    G, B, B, B, B, R, B, G,
-    G, B, R, R, R, G, B, G,
-    G, G, G, G, G, G, G, G
+constexpr uint32_t kR = 0x00FF0000U;                      // red   hex
+constexpr uint32_t kG = 0x0000FF00U;                      // green hex
+constexpr uint32_t kB = 0x000000FFU;                      // blue  hex
+constexpr uint32_t kW = 0xFFFFFFFFU;                      // white hex
+constexpr uint32_t kSCREEN_WIDTH      { 640U };
+constexpr uint32_t kSCREEN_HEIGHT     { 360U };
+constexpr uint32_t kSCREEN_RESOLUTION { kSCREEN_WIDTH * kSCREEN_HEIGHT };
+
+
+constexpr const uint32_t _sprite[8*8] = {
+    kG, kG, kG, kG, kG, kG, kG, kG,
+    kG, kB, kR, kR, kR, kB, kB, kG,
+    kG, kB, kR, kW, kW, kR, kB, kG,
+    kG, kB, kR, kR, kR, kR, kB, kG,
+    kG, kB, kR, kR, kR, kR, kB, kG,
+    kG, kB, kR, kR, kR, kR, kB, kG,
+    kG, kB, kR, kB, kB, kR, kB, kG,
+    kG, kG, kG, kG, kG, kG, kG, kG
 };
+/*----------------------------------------------------------------------------------------*/
 
-struct Game_t {
+void ExecuteGame(const std::string_view gameTitle) {
 
-public:
-    Game_t(uint32_t screenWidth, uint32_t screenHeight)
-        : _screen(new uint32_t[screenWidth * screenHeight]) {}
+    ptc_open(gameTitle.data(), kSCREEN_WIDTH, kSCREEN_HEIGHT);
 
-    Game_t(uint32_t screenResolution) 
-        : _screen(new uint32_t[screenResolution]) {}
-
-    ~Game_t() { delete[] _screen; }
-
-    inline uint32_t* GetScreen() { return _screen; }
-
-private:
-    uint32_t* _screen { nullptr };
-};
-
-
-int main() {
-
-    ptc_open("window", SCREEN_WIDTH, SCREEN_HEIGHT);
-
-    Game_t game (SCREEN_RESOLUTION);
+    auto screen { std::make_unique<uint32_t[]>(kSCREEN_RESOLUTION) };
 
     while (!ptc_process_events()) {
         
-        for (uint32_t pixel=0; pixel < SCREEN_RESOLUTION; ++pixel) {
-            game.GetScreen()[pixel] = R;
+        for (uint32_t pixel=0; pixel < kSCREEN_RESOLUTION; ++pixel) {
+            screen[pixel] = kB;
         }
-
-        uint32_t* screenPtr = game.GetScreen();
+        
+        uint32_t* screenPtr = screen.get();
         const uint32_t* spritePtr = _sprite;
 
-        for (uint32_t i=0; i < 8; ++i) {
-            for (uint32_t j=0; j < 8; ++j) {
+        for (uint32_t i{}; i < 8; ++i) {
+            for (uint32_t j{}; j < 8; ++j) {
 
                 *screenPtr = *spritePtr;
 
@@ -66,16 +55,22 @@ int main() {
                 ++spritePtr;
             }
 
-            spritePtr += SCREEN_WIDTH - 8;
+            screenPtr += kSCREEN_WIDTH - 8;
         }
-
-        ptc_update(game.GetScreen());
+        
+        ptc_update(screen.get());
     }
 
-        
-
-
     ptc_close();
+}
+
+int main() {
+    try {
+        ExecuteGame("Mi primer motor grafico owo");
+    }
+    catch (...) {
+        std::cout << "Exception captured\n";
+    }
 
     return 0;
 }
