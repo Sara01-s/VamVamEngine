@@ -26,7 +26,7 @@ RenderSystem_t::~RenderSystem_t() { ptc_close(); }
 
 void RenderSystem_t::DrawAllEntities(const VecEntities_t& entities) const {
 
-    auto screen { _frameBuffer.get() };                     // creates a "temporal copy of unique_ptr" inside this context by it's raw pointer
+    auto screen { _frameBuffer.get() };                     // creates a "temporary copy of unique_ptr" inside this context by it's raw pointer
 
     auto getScreenXYPos = [&](const uint32_t xPos, const uint32_t yPos) {
         return screen + (yPos * _screenWidth) + xPos;
