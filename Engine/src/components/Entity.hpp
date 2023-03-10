@@ -20,13 +20,13 @@ struct Entity_t {
         Sprite.resize(Width * Height);                                          // Vector's capacity now is sprite's resolution
     }
 
-    explicit Entity_t(std::string pngFile) {
+    explicit Entity_t(std::string_view pngFile) {
         std::vector<unsigned char> pixels {};
         unsigned long outWidth { 0UL }, outHeight { 0UL };
 
         // ifstream is RAII (auto destroyed when out of scope)
         try {
-            std::ifstream file(pngFile, std::ios::binary);                      // using ifstream, "input file stream". C++ way of opening files. Because the file we want to open is a png and not a text file, we use ios::binary to get the bytes of the image
+            std::ifstream file(pngFile.data(), std::ios::binary);               // using ifstream, "input file stream". C++ way of opening files. Because the file we want to open is a png and not a text file, we use ios::binary to get the bytes of the image
 
             std::vector<unsigned char> fileVector (
                 std::istreambuf_iterator<char> { file },                        // begin iterator
@@ -39,8 +39,9 @@ struct Entity_t {
             Sprite.resize(pixels.size() / 4);                                   // From uint32_t size to char size
             std::memcpy(Sprite.data(), pixels.data(), pixels.size());           // Not a good solution because we are resizing twice and filling the memory with 0s, but it works for now
 
-            // Sprite = std::vector<uint32_t> ( pixels.begin(), pixels.end() );    // Behind scenes, this creates a local vector variable, and uses std::move
+            // Sprite = std::vector<uint32_t> ( pixels.begin(), pixels.end() ); // Behind scenes, this creates a local vector variable, and uses std::move
             Width = outWidth; Height = outHeight;
+            Name = pngFile.data();
         }
         catch (...) {
             std::cout << "Tried to read PNG file but something failed. Check PNG format.\n";
@@ -52,6 +53,7 @@ struct Entity_t {
     uint32_t Width { 0 }, Height { 0 };
 
     std::vector<uint32_t> Sprite {};
+    std::string Name { "default" };
 };
     
 } // namespace SalsaEngine
