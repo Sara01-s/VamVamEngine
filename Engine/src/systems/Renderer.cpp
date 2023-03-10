@@ -31,7 +31,7 @@ void RenderSystem_t::DrawAllEntities(const VecEntities_t& entities) const {
     auto getScreenXYPos = [&](const uint32_t xPos, const uint32_t yPos) {
         return screen + (yPos * _screenWidth) + xPos;
     };
-
+    
     auto DrawEntity = [&](const Entity_t& entity) {
         auto screenPos = getScreenXYPos(entity.XPos, entity.YPos);
         auto spriteItr = entity.Sprite.data();
@@ -53,9 +53,9 @@ void RenderSystem_t::DrawAllEntities(const VecEntities_t& entities) const {
 
 
 bool RenderSystem_t::Update(const GameContext_t& gameContext) const {
-    auto screen = _frameBuffer.get();
+    auto screen { _frameBuffer.get() };
 
-    std::fill(screen, screen + _screenResolution, kB);
+    std::fill(screen, screen + _screenResolution, kK);     // Fill the screen with blue
 
     DrawAllEntities(gameContext.GetEntities());
     ptc_update(screen);

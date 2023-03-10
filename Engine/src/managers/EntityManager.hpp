@@ -13,8 +13,7 @@ struct EntityManager_t : public GameContext_t {
 
     static constexpr inline std::size_t kDEFAULT_INIT_ENTITIES { 100 };
 
-
-    void CreateEntity(uint32_t xPos, uint32_t yPos, uint32_t width, uint32_t height, uint32_t color);
+    void CreateEntity(uint32_t xPos, uint32_t yPos);
     const VecEntities_t& GetEntities() const override final { return _allEntities; }
 
 

@@ -21,13 +21,14 @@ struct RenderSystem_t {
     ~RenderSystem_t();
 
     bool Update(const GameContext_t& gameContext) const;
-    void DrawAllEntities(const VecEntities_t& entities) const;    
+    void DrawAllEntities(const VecEntities_t& entities) const;
 
     // Constants // 
     static constexpr uint32_t kR = 0x00FF0000U;                      // red   hex
     static constexpr uint32_t kG = 0x0000FF00U;                      // green hex
     static constexpr uint32_t kB = 0x000000FFU;                      // blue  hex
     static constexpr uint32_t kW = 0xFFFFFFFFU;                      // white hex
+    static constexpr uint32_t kK = 0x00000000U;                      // black hex
 
 private:
     const uint32_t _screenWidth { 0 }, _screenHeight { 0 }, _screenResolution { 0 };

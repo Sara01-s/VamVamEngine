@@ -1,4 +1,4 @@
-# SaraGameEngine
+# SalsaGameEngine
 My Game engine for studying
 
 # Compiling and executing:
