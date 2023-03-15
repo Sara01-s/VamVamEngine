@@ -10,7 +10,7 @@
 /*----------------------------------------------------------------------------------------*/
 
 
-namespace SalsaEngine {
+namespace VamVam {
 
 struct Entity_t {
 
@@ -51,9 +51,10 @@ struct Entity_t {
 
     uint32_t XPos { 0 }, YPos { 0 };
     uint32_t Width { 0 }, Height { 0 };
+    int32_t  velocityX { 1 }, velocityY { 1 };
 
     std::vector<uint32_t> Sprite {};
     std::string Name { "default" };
 };
     
-} // namespace SalsaEngine
+} // namespace VamVam

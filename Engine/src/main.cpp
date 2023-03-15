@@ -14,41 +14,12 @@ namespace fs = std::filesystem;
 
 int main(void) {
     try {
-        SalsaEngine::EntityManager_t entityManager;
-        fs::path dirPath("assets/Video3");
 
-        std::vector<std::filesystem::path> filePaths;
-        std::vector<fs::path> files;
+        const VamVam::EntityManager_t entityManager;
+        const VamVam::PhysicsSystem_t renderSystem { "Mi primer motor owo", kSCREEN_WIDTH, kSCREEN_HEIGHT };
 
-        for (const auto& dirEntry : std::filesystem::directory_iterator(dirPath)) {
-            if (std::filesystem::is_regular_file(dirEntry)) {
-                filePaths.push_back(dirEntry.path());
-            }
-        }
-
-        // Sort the file paths based on the numeric part of their filenames
-        std::sort(filePaths.begin(), filePaths.end(), [](const auto& a, const auto& b) {
-            auto filenameA = a.filename().string();
-            auto filenameB = b.filename().string();
-            auto startA = filenameA.find_first_of("0123456789");
-            auto startB = filenameB.find_first_of("0123456789");
-
-            if (startA == std::string::npos || startB == std::string::npos) {
-                return filenameA < filenameB;
-            }
-            
-            return std::stoi(filenameA.substr(startA)) < std::stoi(filenameB.substr(startB));
-        });
-
-        // Print the sorted file paths
-        for (const auto& filePath : filePaths) {
-            std::cout << "Creada entidad: " << filePath << '\n';
-            entityManager.CreateEntity(0, 0, filePath.string());
-        }
-
-        const SalsaEngine::RenderSystem_t renderSystem { "Mi primer motor owo", kSCREEN_WIDTH, kSCREEN_HEIGHT };
         auto previousTime = std::chrono::high_resolution_clock::now();
-        float deltaTime { 0.0f };
+        auto deltaTime { 0.0f };
 
         // Game loop
         while(renderSystem.Update(entityManager, deltaTime)) {

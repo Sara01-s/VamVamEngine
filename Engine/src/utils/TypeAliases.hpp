@@ -4,7 +4,7 @@
 #include <components/Entity.hpp>
 /*----------------------------------------------------------------------------------------*/
 
-namespace SalsaEngine {
+namespace VamVam {
 
     using VecEntities_t = std::vector<Entity_t>;
 

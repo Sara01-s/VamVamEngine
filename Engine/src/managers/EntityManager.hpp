@@ -5,7 +5,7 @@
 #include <utils/GameContext.hpp>
 /*----------------------------------------------------------------------------------------*/
 
-namespace SalsaEngine {
+namespace VamVam {
 
 struct EntityManager_t : public GameContext_t {
 
@@ -23,5 +23,5 @@ private:
 
 };
 
-}; // namespace SalsaEngine
+}; // namespace VamVam
 
