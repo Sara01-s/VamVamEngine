@@ -1,22 +1,29 @@
 #include <main.hpp>
+
+#include <systems/Collisions.hpp>
 #include <systems/Renderer.hpp>
+#include <systems/Physics.hpp>
+
 #include <managers/EntityManager.hpp>
+
 #include <filesystem>
 #include <algorithm>
 #include <chrono>
 /*----------------------------------------------------------------------------------------*/
 
-constexpr uint32_t kSCREEN_WIDTH      { 480U };
-constexpr uint32_t kSCREEN_HEIGHT     { 360U };
+constexpr uint32_t kSCREEN_WIDTH      { 1080U };
+constexpr uint32_t kSCREEN_HEIGHT     { 720U };
 constexpr uint32_t kSCREEN_RESOLUTION { kSCREEN_WIDTH * kSCREEN_HEIGHT };
-
-namespace fs = std::filesystem;
 
 int main(void) {
     try {
+        const VamVam::RenderSystem_t renderSystem { "Mi motor gráfico owo", kSCREEN_WIDTH, kSCREEN_HEIGHT };
 
-        const VamVam::EntityManager_t entityManager;
-        const VamVam::PhysicsSystem_t renderSystem { "Mi primer motor owo", kSCREEN_WIDTH, kSCREEN_HEIGHT };
+        VamVam::CollisionSystem_t collisionSystem;
+        VamVam::PhysicsSystem_t physicsSystem;
+        VamVam::EntityManager_t entityManager;
+
+        entityManager.CreateEntity(0, 0, "assets/dvd_logo.png");
 
         auto previousTime = std::chrono::high_resolution_clock::now();
         auto deltaTime { 0.0f };
@@ -24,10 +31,12 @@ int main(void) {
         // Game loop
         while(renderSystem.Update(entityManager, deltaTime)) {
             auto currentTime = std::chrono::high_resolution_clock::now();
-
             deltaTime = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - previousTime).count() * 1000.0f;
-
             previousTime = currentTime;
+
+            physicsSystem.Update(entityManager, deltaTime);
+            collisionSystem.Update(entityManager, deltaTime);
+
         }
     }
     catch (...) {

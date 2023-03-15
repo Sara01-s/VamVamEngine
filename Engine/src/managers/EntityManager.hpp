@@ -15,6 +15,7 @@ struct EntityManager_t : public GameContext_t {
 
     void CreateEntity(uint32_t xPos, uint32_t yPos, std::string_view pngFile);
     const VecEntities_t& GetEntities() const override final { return _allEntities; }
+    VecEntities_t& GetEntities() override final { return _allEntities; }
 
 
 private:

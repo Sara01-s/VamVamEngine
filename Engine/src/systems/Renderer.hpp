@@ -12,15 +12,15 @@ namespace VamVam {
 // because RenderSystem only stores a reference to GameContext_t. This is called forward declaration
 struct GameContext_t;
 
-struct PhysicsSystem_t {
-    explicit PhysicsSystem_t(
+struct RenderSystem_t {
+    explicit RenderSystem_t(
         std::string_view gameTitle, 
         uint32_t screenWidth, uint32_t screenHeight
     );
     
-    ~PhysicsSystem_t();
+    ~RenderSystem_t();
 
-    bool Update(const GameContext_t& gameContext, float deltaTime) const;
+    bool Update(const GameContext_t& gameContext, const float deltaTime) const;
 
     void DrawSingleEntity(const Entity_t& entity) const;
     void DrawAllEntities(const VecEntities_t& entities) const;
