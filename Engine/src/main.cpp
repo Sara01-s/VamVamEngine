@@ -1,81 +1,38 @@
-extern "C" { 
-#include <../libs/tinyPTC/src/linux/tinyptc.h>
-}
+#include <main.hpp>
+#include <systems/Renderer.hpp>
+#include <managers/EntityManager.hpp>
+#include <filesystem>
+#include <algorithm>
+#include <chrono>
+/*----------------------------------------------------------------------------------------*/
 
-#include <cstdint>
-#include "main.hpp"
+constexpr uint32_t kSCREEN_WIDTH      { 480U };
+constexpr uint32_t kSCREEN_HEIGHT     { 360U };
+constexpr uint32_t kSCREEN_RESOLUTION { kSCREEN_WIDTH * kSCREEN_HEIGHT };
 
-constexpr uint32_t R = 0x00FF0000;                      // red   hex
-constexpr uint32_t G = 0x0000FF00;                      // green hex
-constexpr uint32_t B = 0x000000FF;                      // blue  hex
-constexpr uint32_t SCREEN_WIDTH      { 640 };
-constexpr uint32_t SCREEN_HEIGHT     { 360 };
-constexpr uint32_t SCREEN_RESOLUTION { SCREEN_WIDTH * SCREEN_HEIGHT };
+namespace fs = std::filesystem;
 
+int main(void) {
+    try {
 
-constexpr uint32_t _sprite[8*8] = {
-    G, G, G, G, G, G, G, G,
-    G, B, R, R, R, R, B, G,
-    G, B, R, G, G, G, B, G,
-    G, B, B, R, G, G, B, G,
-    G, B, B, B, R, R, B, G,
-    G, B, B, B, B, R, B, G,
-    G, B, R, R, R, G, B, G,
-    G, G, G, G, G, G, G, G
-};
+        const VamVam::EntityManager_t entityManager;
+        const VamVam::PhysicsSystem_t renderSystem { "Mi primer motor owo", kSCREEN_WIDTH, kSCREEN_HEIGHT };
 
-struct Game_t {
+        auto previousTime = std::chrono::high_resolution_clock::now();
+        auto deltaTime { 0.0f };
 
-public:
-    Game_t(uint32_t screenWidth, uint32_t screenHeight)
-        : _screen(new uint32_t[screenWidth * screenHeight]) {}
+        // Game loop
+        while(renderSystem.Update(entityManager, deltaTime)) {
+            auto currentTime = std::chrono::high_resolution_clock::now();
 
-    Game_t(uint32_t screenResolution) 
-        : _screen(new uint32_t[screenResolution]) {}
+            deltaTime = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - previousTime).count() * 1000.0f;
 
-    ~Game_t() { delete[] _screen; }
-
-    inline uint32_t* GetScreen() { return _screen; }
-
-private:
-    uint32_t* _screen { nullptr };
-};
-
-
-int main() {
-
-    ptc_open("window", SCREEN_WIDTH, SCREEN_HEIGHT);
-
-    Game_t game (SCREEN_RESOLUTION);
-
-    while (!ptc_process_events()) {
-        
-        for (uint32_t pixel=0; pixel < SCREEN_RESOLUTION; ++pixel) {
-            game.GetScreen()[pixel] = R;
+            previousTime = currentTime;
         }
-
-        uint32_t* screenPtr = game.GetScreen();
-        const uint32_t* spritePtr = _sprite;
-
-        for (uint32_t i=0; i < 8; ++i) {
-            for (uint32_t j=0; j < 8; ++j) {
-
-                *screenPtr = *spritePtr;
-
-                ++screenPtr;
-                ++spritePtr;
-            }
-
-            spritePtr += SCREEN_WIDTH - 8;
-        }
-
-        ptc_update(game.GetScreen());
     }
-
-        
-
-
-    ptc_close();
+    catch (...) {
+        std::cout << "Exception captured\n";
+    }
 
     return 0;
 }
