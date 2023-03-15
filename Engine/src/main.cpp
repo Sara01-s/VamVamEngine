@@ -1,3 +1,7 @@
+extern "C" {
+    #include <../libs/miniaudio/src/miniaudio.h>
+}
+
 #include <main.hpp>
 #include <systems/Renderer.hpp>
 #include <managers/EntityManager.hpp>
@@ -45,6 +49,19 @@ int main(void) {
             std::cout << "Creada entidad: " << filePath << '\n';
             entityManager.CreateEntity(0, 0, filePath.string());
         }
+        ma_engine engine;
+
+        ma_result result = ma_engine_init(nullptr, &engine);
+        if (result != MA_SUCCESS) {
+            printf("Failed to initialize miniaudio.\n");
+            return -1;
+        }
+        
+        ma_sound_group group;
+        ma_sound_group_init(&engine, 1, NULL, &group);
+
+
+        ma_engine_play_sound(&engine, "assets/lagartija.mp3", &group);
 
         const SalsaEngine::RenderSystem_t renderSystem { "Mi primer motor owo", kSCREEN_WIDTH, kSCREEN_HEIGHT };
         auto previousTime = std::chrono::high_resolution_clock::now();

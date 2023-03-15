@@ -34,7 +34,7 @@ MKDIR   := mkdir -p
 RM		:= rm
 SRC     := src
 OBJ     := obj
-LIBS    := libs/picoPNG/libPicoPNG.a libs/tinyPTC/libTinyPTC.a
+LIBS    := libs/picoPNG/libPicoPNG.a libs/tinyPTC/libTinyPTC.a libs/miniaudio/miniaudio.a
 LIBSDIR := libs
 INCDIRS := -I$(SRC) -I$(LIBSDIR)
 
