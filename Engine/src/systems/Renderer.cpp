@@ -58,7 +58,7 @@ namespace VamVam {
     }
 
     bool 
-    RenderSystem_t::Update(const GameContext_t& gameContext, const float deltaTime) const {
+    RenderSystem_t::Update(const GameContext_t& gameContext/*, const float deltaTime*/) const {
         auto screen { _frameBuffer.get() };
         auto& entities = gameContext.GetEntities();
 

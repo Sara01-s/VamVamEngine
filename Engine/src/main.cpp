@@ -28,16 +28,16 @@ main() {
         entityManager.CreateEntity(0, 0, "assets/slime.png");
 
         auto previousTime = std::chrono::high_resolution_clock::now();
-        auto deltaTime { 0.0f };
+        // auto deltaTime { 0.0f };
 
         // Game loop
-        while(renderSystem.Update(entityManager, deltaTime)) {
+        while(renderSystem.Update(entityManager/*, deltaTime)*/)) {
             auto currentTime = std::chrono::high_resolution_clock::now();
-            deltaTime = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - previousTime).count() * 1000.0f;
+            // deltaTime = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - previousTime).count() * 1000.0f;
             previousTime = currentTime;
 
-            physicsSystem.Update(entityManager, deltaTime);
-            collisionSystem.Update(entityManager, deltaTime);
+            physicsSystem.Update(entityManager/*, deltaTime*/);
+            collisionSystem.Update(entityManager/*, deltaTime*/);
 
         }
     }

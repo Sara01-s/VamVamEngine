@@ -8,6 +8,7 @@
 #include <iostream>
 #include <cstring>
 #include <components/Physics.hpp>
+#include <utility>
 /*----------------------------------------------------------------------------------------*/
 
 
@@ -20,6 +21,21 @@ struct Entity_t {
     {
         Sprite.resize(Width * Height);                                              // Vector's capacity is now sprite's resolution
     }
+
+    Entity_t(const Entity_t& other) { 
+        this->Name = other.Name;
+        this->Width = other.Width;
+        this->Height = other.Height;
+        this->Physics = (this->Physics == nullptr) ? 
+                        other.Physics : nullptr;
+    }
+
+     Entity_t& operator=(Entity_t other) {
+        std::swap(Name, other.Name);
+        std::swap(Physics, other.Physics);
+        return *this;
+    }
+
 
     explicit Entity_t(std::string_view pngFile) {
         std::vector<unsigned char> pngPixels { };

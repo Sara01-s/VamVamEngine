@@ -20,7 +20,7 @@ namespace VamVam {
         
         ~RenderSystem_t();
 
-        bool Update(const GameContext_t& gameContext, const float deltaTime) const;
+        bool Update(const GameContext_t& gameContext/*, const float deltaTime*/) const;
 
         void DrawSingleEntity(const Entity_t& entity) const;
         void DrawAllEntities(const VecEntities_t& entities) const;

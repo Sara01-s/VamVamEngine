@@ -6,7 +6,7 @@
 namespace VamVam {
 
     bool
-    CollisionSystem_t::Update(GameContext_t& gameContext, const float deltaTime) const {
+    CollisionSystem_t::Update(GameContext_t& gameContext/*, const float deltaTime*/) const {
 
         for (auto& entity : gameContext.GetEntities()) {
             
@@ -16,13 +16,13 @@ namespace VamVam {
             }
 
             if (entity.Physics-> XPos > 1080 || entity.Physics-> XPos + entity.Width > 1080) {
-                entity.Physics-> XPos -= entity.Physics-> velocityX;
-                entity.Physics-> velocityX = -entity.Physics-> velocityX;
+                entity.Physics-> XPos     -= static_cast<uint32_t>( entity.Physics-> velocityX);
+                entity.Physics-> velocityX = static_cast<uint32_t>(-entity.Physics-> velocityX);
             }
 
             if (entity.Physics-> YPos > 720 || entity.Physics-> YPos + entity.Width > 720) {
-                entity.Physics-> YPos -= entity.Physics-> velocityY;
-                entity.Physics-> velocityY = -entity.Physics-> velocityY;
+                entity.Physics-> YPos     -= static_cast<uint32_t>( entity.Physics-> velocityY);
+                entity.Physics-> velocityY = static_cast<uint32_t>(-entity.Physics-> velocityY);
             }
         }
 

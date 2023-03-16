@@ -11,7 +11,7 @@ namespace VamVam {
 
         explicit CollisionSystem_t() = default;
 
-        bool Update(GameContext_t& gameContext, const float deltaTime) const;
+        bool Update(GameContext_t& gameContext/*, const float deltaTime*/) const;
 
     };
     

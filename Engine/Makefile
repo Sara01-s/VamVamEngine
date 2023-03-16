@@ -26,7 +26,7 @@ endef
 
 
 APP 	:= game
-CFLAGS  := -Wall -pedantic
+CFLAGS  := -Wall -Wextra -Weffc++ #-Wsign-conversion #-Wpedantic 
 CCFLAGS := $(CFLAGS) -std=c++17
 C       := gcc
 CC      := g++
