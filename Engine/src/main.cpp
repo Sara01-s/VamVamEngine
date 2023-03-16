@@ -17,13 +17,13 @@ constexpr uint32_t kSCREEN_RESOLUTION { kSCREEN_WIDTH * kSCREEN_HEIGHT };
 
 int main(void) {
     try {
-        const VamVam::RenderSystem_t renderSystem { "Mi motor gráfico owo", kSCREEN_WIDTH, kSCREEN_HEIGHT };
+        const VamVam::RenderSystem_t renderSystem { "Mi motor grafico owo", kSCREEN_WIDTH, kSCREEN_HEIGHT };
 
         VamVam::CollisionSystem_t collisionSystem;
         VamVam::PhysicsSystem_t physicsSystem;
         VamVam::EntityManager_t entityManager;
 
-        entityManager.CreateEntity(0, 0, "assets/dvd_logo.png");
+        entityManager.CreateEntity(0, 0, "assets/slime.png");
 
         auto previousTime = std::chrono::high_resolution_clock::now();
         auto deltaTime { 0.0f };

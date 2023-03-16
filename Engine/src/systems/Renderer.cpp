@@ -37,7 +37,7 @@ void RenderSystem_t::DrawSingleEntity(const Entity_t& entity) const {
         return screen + (yPos * _screenWidth) + xPos;
     };
     
-    auto screenPos = getScreenXYPos(entity.XPos, entity.YPos);
+    auto screenPos = getScreenXYPos(entity.Physics-> XPos, entity.Physics-> YPos);
     auto spriteItr = entity.Sprite.data();
 
     for (uint32_t entityY=0; entityY < entity.Height; ++entityY) {

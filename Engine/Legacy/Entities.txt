@@ -17,3 +17,8 @@ void EntityManager_t::CreateEntity(uint32_t width, uint32_t height, uint32_t col
 
     std::fill(begin(createdEntity.Sprite), end(createdEntity.Sprite), color);
 }
+
+
+// Reading PNGS
+// Sprite = std::vector<uint32_t> ( pixels.begin(), pixels.end() ); // Behind scenes, this creates a local vector variable, and uses std::move
+std::memcpy(Sprite.data(), pixels.data(), pixels.size());            // Not a good solution because we are resizing twice and filling the memory with 0s, but it works for now

@@ -3,6 +3,7 @@
 #include <vector>
 #include <utils/TypeAliases.hpp>
 #include <utils/GameContext.hpp>
+#include <managers/ComponentStorage.hpp>
 /*----------------------------------------------------------------------------------------*/
 
 namespace VamVam {
@@ -20,7 +21,8 @@ struct EntityManager_t : public GameContext_t {
 
 private:
 
-    VecEntities_t _allEntities {};
+    VecEntities_t _allEntities { };
+    ComponentStorage_t _componentStorage { kDEFAULT_INIT_ENTITIES };
 
 };
 

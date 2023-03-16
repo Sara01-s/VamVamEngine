@@ -1,0 +1,28 @@
+#pragma once
+#include <vector>
+#include <components/Physics.hpp>
+/*----------------------------------------------------------------------------------------*/
+
+
+namespace VamVam {
+
+    struct ComponentStorage_t {
+        explicit ComponentStorage_t(std::size_t initialSize) {
+            _physicComponents.reserve(initialSize);
+        }
+
+        ComponentStorage_t() = delete;
+        ComponentStorage_t(const ComponentStorage_t& ) = delete;
+        ComponentStorage_t(ComponentStorage_t&&)       = delete;                    // && = reference to an RValue (temp value or anonymous value)
+        ComponentStorage_t& operator=(const ComponentStorage_t& ) = delete;
+        ComponentStorage_t& operator=(ComponentStorage_t&&)       = delete;
+
+        PhysicsComponent_t& CreatePhysicsComponent();
+
+    private:
+
+        std::vector<PhysicsComponent_t> _physicComponents { };
+
+    };
+    
+} // namespace VamVam

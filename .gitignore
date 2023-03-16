@@ -15,4 +15,5 @@
 *.sln
 
 # executable
+*.exe
 game

@@ -1,5 +1,5 @@
 auto spriteItr = begin(entity.Sprite);
-        for (uint32_t entityY{}; entityY < entity.Height; ++entityY) {
+        for (uint32_t entityY{ }; entityY < entity.Height; ++entityY) {
             std::copy(
                   spriteItr                             // From the start of the sprite's row
                 , spriteItr + entity.Width              // To the end of the sprite's row
@@ -13,7 +13,7 @@ auto spriteItr = begin(entity.Sprite);
 // vector.data() works the same way
 
 auto spriteItr = entity.Sprite.data();
-        for (uint32_t entityY{}; entityY < entity.Height; ++entityY) {
+        for (uint32_t entityY{ }; entityY < entity.Height; ++entityY) {
             std::copy(
                   spriteItr                             // From the start of the sprite's row
                 , spriteItr + entity.Width              // To the end of the sprite's row
