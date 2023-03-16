@@ -15,7 +15,7 @@ constexpr uint32_t kSCREEN_WIDTH      { 1080U };
 constexpr uint32_t kSCREEN_HEIGHT     { 720U };
 constexpr uint32_t kSCREEN_RESOLUTION { kSCREEN_WIDTH * kSCREEN_HEIGHT };
 
-int main(void) {
+int main() {
     try {
         const VamVam::RenderSystem_t renderSystem { "Mi motor grafico owo", kSCREEN_WIDTH, kSCREEN_HEIGHT };
 
