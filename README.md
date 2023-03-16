@@ -1,5 +1,5 @@
-# SaraGameEngine
-My Game engine for studying
+# Vam vam studios Game Engine (WIP)
+currently used for studying purposes
 
 # Compiling and executing:
 ```
