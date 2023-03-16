@@ -1,7 +1,0 @@
-auto DrawEntity = [&]() {     // & All the objects in the context are passed by reference to the lambda
-
-};
-
-auto DrawEntity = [=]() {     // & All the objects in the context are passed by copying them to the lambda
-
-};
