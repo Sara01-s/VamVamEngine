@@ -18,6 +18,9 @@ namespace VamVam {
         ComponentStorage_t& operator=(ComponentStorage_t&&)       = delete;
 
         PhysicsComponent_t& CreatePhysicsComponent();
+        
+        const std::vector<PhysicsComponent_t>& GetPhysicsComponents() const { return _physicComponents; }
+              std::vector<PhysicsComponent_t>& GetPhysicsComponents()       { return _physicComponents; }
 
     private:
 

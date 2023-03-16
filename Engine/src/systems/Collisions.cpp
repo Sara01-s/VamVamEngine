@@ -5,7 +5,8 @@
 
 namespace VamVam {
 
-    bool CollisionSystem_t::Update(GameContext_t& gameContext, const float deltaTime) const {
+    bool
+    CollisionSystem_t::Update(GameContext_t& gameContext, const float deltaTime) const {
 
         for (auto& entity : gameContext.GetEntities()) {
             
