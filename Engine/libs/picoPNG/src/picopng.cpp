@@ -21,7 +21,7 @@ convert_to_rgba32: optional parameter, true by default.
   works for trusted PNG files. Use LodePNG instead of picoPNG if you need this information.
 return: 0 if success, not 0 if some error occured.
 */
-int decodePNG(std::vector < unsigned char > & out_image, unsigned long & image_width, unsigned long & image_height,
+int decodePNG(std::vector <unsigned char> & out_image, unsigned long & image_width, unsigned long & image_height,
     const unsigned char * in_png, std::size_t in_size, bool convert_to_rgba32 = true) {
     using namespace std;
     // picoPNG: UA GameDev Version 20191112, with minor modifications from original version 20101224
@@ -52,171 +52,29 @@ int decodePNG(std::vector < unsigned char > & out_image, unsigned long & image_w
     // Apologies for the compact code style, it's to make this tiny.
 
     static
-    const unsigned long LENBASE[29] = {
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        13,
-        15,
-        17,
-        19,
-        23,
-        27,
-        31,
-        35,
-        43,
-        51,
-        59,
-        67,
-        83,
-        99,
-        115,
-        131,
-        163,
-        195,
-        227,
-        258
-    };
+    const unsigned long LENBASE[29]   = { 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258 };
     static
-    const unsigned long LENEXTRA[29] = {
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        1,
-        1,
-        1,
-        2,
-        2,
-        2,
-        2,
-        3,
-        3,
-        3,
-        3,
-        4,
-        4,
-        4,
-        4,
-        5,
-        5,
-        5,
-        5,
-        0
-    };
+    const unsigned long LENEXTRA[29]  = { 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0 };
     static
-    const unsigned long DISTBASE[30] = {
-        1,
-        2,
-        3,
-        4,
-        5,
-        7,
-        9,
-        13,
-        17,
-        25,
-        33,
-        49,
-        65,
-        97,
-        129,
-        193,
-        257,
-        385,
-        513,
-        769,
-        1025,
-        1537,
-        2049,
-        3073,
-        4097,
-        6145,
-        8193,
-        12289,
-        16385,
-        24577
-    };
+    const unsigned long DISTBASE[30]  = { 1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577 };
     static
-    const unsigned long DISTEXTRA[30] = {
-        0,
-        0,
-        0,
-        0,
-        1,
-        1,
-        2,
-        2,
-        3,
-        3,
-        4,
-        4,
-        5,
-        5,
-        6,
-        6,
-        7,
-        7,
-        8,
-        8,
-        9,
-        9,
-        10,
-        10,
-        11,
-        11,
-        12,
-        12,
-        13,
-        13
-    };
+    const unsigned long DISTEXTRA[30] = { 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13 };
     static
-    const unsigned long CLCL[19] = {
-        16,
-        17,
-        18,
-        0,
-        8,
-        7,
-        9,
-        6,
-        10,
-        5,
-        11,
-        4,
-        12,
-        3,
-        13,
-        2,
-        14,
-        1,
-        15
-    }; //code length code lengths
+    const unsigned long CLCL[19]      = { 16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15 }; //code length code lengths
     struct Zlib //nested functions for zlib decompression
     {
-        static unsigned long readBitFromStream(size_t & bitp,
-            const unsigned char * bits) {
+        static unsigned long readBitFromStream(size_t & bitp, const unsigned char * bits) {
             unsigned long result = (bits[bitp >> 3] >> (bitp & 0x7)) & 1;
             bitp++;
             return result;
         }
-        static unsigned long readBitsFromStream(size_t & bitp,
-            const unsigned char * bits, size_t nbits) {
+
+        static unsigned long readBitsFromStream(size_t & bitp, const unsigned char * bits, size_t nbits) {
             unsigned long result = 0;
             for (size_t i = 0; i < nbits; i++) result += (readBitFromStream(bitp, bits)) << i;
             return result;
         }
+
         struct HuffmanTree {
             int makeFromLengths(const std::vector < unsigned long > & bitlen, unsigned long maxbitlen) { //make tree given the lengths
                 unsigned long numcodes = (unsigned long)(bitlen.size()), treepos = 0, nodefilled = 0;
@@ -229,21 +87,22 @@ int decodePNG(std::vector < unsigned char > & out_image, unsigned long & image_w
                 tree2d.resize(numcodes * 2, 32767); //32767 here means the tree2d isn't filled there yet
                 for (unsigned long n = 0; n < numcodes; n++) //the codes
                     for (unsigned long i = 0; i < bitlen[n]; i++) //the bits for this code
-                {
-                    unsigned long bit = (tree1d[n] >> (bitlen[n] - i - 1)) & 1;
-                    if (treepos > numcodes - 2) return 55;
-                    if (tree2d[2 * treepos + bit] == 32767) //not yet filled in
                     {
-                        if (i + 1 == bitlen[n]) {
-                            tree2d[2 * treepos + bit] = n;
-                            treepos = 0;
-                        } //last bit
-                        else {
-                            tree2d[2 * treepos + bit] = ++nodefilled + numcodes;
-                            treepos = nodefilled;
-                        } //addresses are encoded as values > numcodes
-                    } else treepos = tree2d[2 * treepos + bit] - numcodes; //subtract numcodes from address to get address value
-                }
+                        unsigned long bit = (tree1d[n] >> (bitlen[n] - i - 1)) & 1;
+                        if (treepos > numcodes - 2) 
+                            return 55;
+                        if (tree2d[2 * treepos + bit] == 32767) //not yet filled in
+                        {
+                            if (i + 1 == bitlen[n]) {
+                                tree2d[2 * treepos + bit] = n;
+                                treepos = 0;
+                            } //last bit
+                            else {
+                                tree2d[2 * treepos + bit] = ++nodefilled + numcodes;
+                                treepos = nodefilled;
+                            } //addresses are encoded as values > numcodes
+                        } else treepos = tree2d[2 * treepos + bit] - numcodes; //subtract numcodes from address to get address value
+                    }
                 return 0;
             }
             int decode(bool & decoded, unsigned long & result, size_t & treepos, unsigned long bit) const { //Decodes a symbol from the tree
@@ -644,36 +503,7 @@ int decodePNG(std::vector < unsigned char > & out_image, unsigned long & image_w
                 size_t passstart[7] = {
                     0
                 };
-                size_t pattern[28] = {
-                    0,
-                    4,
-                    0,
-                    2,
-                    0,
-                    1,
-                    0,
-                    0,
-                    0,
-                    4,
-                    0,
-                    2,
-                    0,
-                    1,
-                    8,
-                    8,
-                    4,
-                    4,
-                    2,
-                    2,
-                    1,
-                    8,
-                    8,
-                    8,
-                    4,
-                    4,
-                    2,
-                    2
-                }; //values for the adam7 passes
+                size_t pattern[28] = { 0, 4, 0, 2, 0, 1, 0, 0, 0, 4, 0, 2, 0, 1, 8, 8, 4, 4, 2, 2, 1, 8, 8, 8, 4, 4, 2, 2 }; //values for the adam7 passes
                 for (int i = 0; i < 6; i++) passstart[i + 1] = passstart[i] + passh[i] * ((passw[i] ? 1 : 0) + (passw[i] * bpp + 7) / 8);
                 std::vector < unsigned char > scanlineo((info.width * bpp + 7) / 8), scanlinen((info.width * bpp + 7) / 8); //"old" and "new" scanline
                 for (int i = 0; i < 7; i++)
