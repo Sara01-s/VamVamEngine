@@ -17,12 +17,14 @@ namespace VamVam {
 struct Entity_t {
 
     explicit Entity_t(uint32_t width, uint32_t height) 
-        : Width { width }, Height { height }
+        : Width(std::move(width)), Height(std::move(height))
     {
         Sprite.resize(Width * Height);                                              // Vector's capacity is now sprite's resolution
     }
 
-    Entity_t(const Entity_t& other) { 
+    Entity_t(Entity_t&& other) : Width(std::move(other.Width)), Height(std::move(other.Height)) { }
+
+    Entity_t(const Entity_t& other) {
         this->Name = other.Name;
         this->Width = other.Width;
         this->Height = other.Height;
@@ -30,16 +32,19 @@ struct Entity_t {
                         other.Physics : nullptr;
     }
 
-     Entity_t& operator=(Entity_t other) {
+    Entity_t& operator=(Entity_t other) {
         std::swap(Name, other.Name);
         std::swap(Physics, other.Physics);
         return *this;
     }
 
+    bool operator==(std::nullptr_t) const { return false; }
+
 
     explicit Entity_t(std::string_view pngFile) {
         std::vector<unsigned char> pngPixels { };
         unsigned long outWidth { 0UL }, outHeight { 0UL };
+
 
         // ifstream is RAII (auto destroyed when out of scope)
         try {
@@ -62,16 +67,16 @@ struct Entity_t {
             for (auto pngPixel = pngPixels.begin(); pngPixel != pngPixels.end(); pngPixel += 4) {
                 uint32_t spritePixel =
                       static_cast<uint32_t> (*(pngPixel + 0)) << 16     // G
-                    | static_cast<uint32_t> (*(pngPixel + 1)) << 8      // B
+                    | static_cast<uint32_t> (*(pngPixel + 1)) << 8      // B  
                     | static_cast<uint32_t> (*(pngPixel + 2))           // A
                     | static_cast<uint32_t> (*(pngPixel + 3)) << 24;    // R
                 Sprite.push_back(spritePixel);
             }
-
         }
         catch (...) {
             std::cout << "Tried to read PNG file but something failed. Check PNG format.\n";
         }
+        // matemágico estuvo aquí > _ <
     }
 
 

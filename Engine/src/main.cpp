@@ -6,6 +6,7 @@
 
 #include <managers/EntityManager.hpp>
 
+#include <iostream> // lo puso matemágico
 #include <filesystem>
 #include <algorithm>
 #include <chrono>
@@ -21,12 +22,12 @@ main() {
     try {
         const VamVam::RenderSystem_t renderSystem { "Mi motor grafico owo", kSCREEN_WIDTH, kSCREEN_HEIGHT };
 
-        VamVam::CollisionSystem_t collisionSystem;
-        VamVam::PhysicsSystem_t physicsSystem;
-        VamVam::EntityManager_t entityManager;
+        VamVam::CollisionSystem_t collisionSystem { };
+        VamVam::PhysicsSystem_t physicsSystem     { };
+        VamVam::EntityManager_t entityManager     { };
 
         entityManager.CreateEntity(0, 0, "assets/slime.png");
-
+        
         auto previousTime = std::chrono::high_resolution_clock::now();
         // auto deltaTime { 0.0f };
 

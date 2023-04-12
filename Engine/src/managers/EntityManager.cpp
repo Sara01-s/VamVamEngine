@@ -11,7 +11,9 @@ namespace VamVam {
 
     void
     EntityManager_t::CreateEntity(uint32_t xPos, uint32_t yPos, std::string_view pngFile) {
-        auto& createdEntity = _allEntities.emplace_back(pngFile);
+        Entity_t entity { pngFile };
+        std::cout << "Sigo existiendo aqui" << '\n';
+        auto& createdEntity = _allEntities.emplace_back(entity); // SUS
         auto& physicComponent = _componentStorage.CreatePhysicsComponent();
 
         createdEntity.Physics = &physicComponent;

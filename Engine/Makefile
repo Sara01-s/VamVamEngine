@@ -26,7 +26,7 @@ endef
 
 
 APP 	:= game
-CFLAGS  := -Wall -Wextra -Weffc++ #-Wsign-conversion #-Wpedantic 
+CFLAGS  := -Wall -Wextra -Weffc++ -Wpedantic -static-libgcc -static-libstdc++ #-Wsign-conversion
 CCFLAGS := $(CFLAGS) -std=c++17
 C       := gcc
 CC      := g++
@@ -39,7 +39,7 @@ LIBSDIR := libs
 INCDIRS := -I$(SRC) -I$(LIBSDIR)
 
 ifdef RELEASE 			#Activar optimizaciones si game es una release (uso: make RELEASE=1) 
-	CCFLAGS += -O3
+	CCFLAGS += -O1
 else
 	CCFLAGS += -g
 endif

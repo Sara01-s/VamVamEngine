@@ -12,15 +12,15 @@ namespace VamVam {
         Debug_t& operator=(const Debug_t&) = delete;
 
         static void Log(const std::string_view message) {
-            std::cout << "Log: " << message << std::endl;
+            std::cout << "Log: " << message << '\n';
         }
 
         static void LogError(const std::string_view message) {
-            std::cout << "Log Error: " << message << std::endl;
+            std::cout << "Log Error: " << message << '\n';
         }
 
         static void LogWarning(const std::string_view message) {
-            std::cout << "Log Warning: " << message << std::endl;
+            std::cout << "Log Warning: " << message << '\n';
         }
 
     };
