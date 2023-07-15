@@ -6,7 +6,7 @@
     
     "configurations": [
         {
-            "name": "(gdb) Iniciar",
+            "name": "GDB",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/Engine/game.exe.",
@@ -16,7 +16,7 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:/mingw64/bin/gdb.exe",
+            "miDebuggerPath": "C:\\msys64\\mingw64\\bin\\gdb.exe",
         }   
 
     ]

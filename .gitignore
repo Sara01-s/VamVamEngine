@@ -8,7 +8,7 @@
 *.o
 
 # annoying windows stuff
-*.ink
+*.[Ii]nk
 
 # Visual Studio
 *.vs

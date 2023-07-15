@@ -26,7 +26,7 @@ endef
 
 
 APP 	:= game
-CFLAGS  := -Wall -Wextra -Weffc++ -Wpedantic -static-libgcc -static-libstdc++ #-Wsign-conversion
+CFLAGS  := -Wall -Wpedantic #-Wsign-conversion
 CCFLAGS := $(CFLAGS) -std=c++17
 C       := gcc
 CC      := g++
@@ -94,7 +94,7 @@ $(OBJSUBDIRS):
 clean:
 	$(RM) -r "./$(OBJ)"
 
-cleanall: clean
+clean-all: clean
 	$(RM) "./$(APP)"
 	
 ## LIB RULES
