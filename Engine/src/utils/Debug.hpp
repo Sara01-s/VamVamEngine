@@ -2,7 +2,7 @@
 #include <utils/NonCopyable.hpp>
 #include <iostream>
 
-namespace VamVam {
+namespace VVE {
 
     struct Debug_t : public NonCopyable {
         
@@ -25,4 +25,4 @@ namespace VamVam {
 
     };
     
-} // namespace VamVam
+} // namespace VVE

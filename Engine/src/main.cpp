@@ -20,11 +20,11 @@ int
 main() {
 
     try {
-        const VamVam::RenderSystem_t renderSystem { "Mi motor grafico owo", kSCREEN_WIDTH, kSCREEN_HEIGHT };
+        const VVE::RenderSystem_t renderSystem { "Mi motor grafico owo", kSCREEN_WIDTH, kSCREEN_HEIGHT };
 
-        VamVam::CollisionSystem_t collisionSystem { };
-        VamVam::PhysicsSystem_t physicsSystem     { };
-        VamVam::EntityManager_t entityManager     { };
+        VVE::CollisionSystem_t collisionSystem { };
+        VVE::PhysicsSystem_t physicsSystem     { };
+        VVE::EntityManager_t entityManager     { };
 
         entityManager.CreateEntity(0, 0, "assets/slime.png");
         

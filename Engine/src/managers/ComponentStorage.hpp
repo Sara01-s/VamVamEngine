@@ -4,7 +4,7 @@
 /*----------------------------------------------------------------------------------------*/
 
 
-namespace VamVam {
+namespace VVE {
 
     struct ComponentStorage_t {
         explicit ComponentStorage_t(std::size_t initialSize) {
@@ -28,4 +28,4 @@ namespace VamVam {
 
     };
     
-} // namespace VamVam
+} // namespace VVE

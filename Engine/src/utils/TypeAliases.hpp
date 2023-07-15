@@ -4,7 +4,7 @@
 #include <components/Entity.hpp>
 /*----------------------------------------------------------------------------------------*/
 
-namespace VamVam {
+namespace VVE {
 
     using VecEntities_t = std::vector<Entity_t>;
 

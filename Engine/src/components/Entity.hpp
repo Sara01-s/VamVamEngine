@@ -12,7 +12,7 @@
 /*----------------------------------------------------------------------------------------*/
 
 
-namespace VamVam {
+namespace VVE {
 
 struct Entity_t {
 
@@ -52,7 +52,7 @@ struct Entity_t {
 
             std::vector<unsigned char> fileVector (
                 std::istreambuf_iterator<char> { file },                            // begin iterator
-                std::istreambuf_iterator<char> { }                                   // end iterator (istreambuf_iterator default constructor points to the end of the stream, aka "eof" (end of file))
+                std::istreambuf_iterator<char> { }                                  // end iterator (istreambuf_iterator default constructor points to the end of the stream, aka "eof" (end of file))
             );
             //                            same as "&fileVector[0]"
             decodePNG(pngPixels, outWidth, outHeight, fileVector.data(), fileVector.size());
@@ -76,7 +76,6 @@ struct Entity_t {
         catch (...) {
             std::cout << "Tried to read PNG file but something failed. Check PNG format.\n";
         }
-        // matemágico estuvo aquí > _ <
     }
 
 
@@ -87,4 +86,4 @@ struct Entity_t {
     std::string Name { "default" };
 };
     
-} // namespace VamVam
+} // namespace VVE

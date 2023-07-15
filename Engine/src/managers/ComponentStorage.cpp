@@ -1,6 +1,6 @@
 #include <managers/ComponentStorage.hpp>
 
-namespace VamVam {
+namespace VVE {
 
     PhysicsComponent_t&
     ComponentStorage_t::CreatePhysicsComponent() {
@@ -8,4 +8,4 @@ namespace VamVam {
         return physicComponent;
     }
     
-} // namespace VamVam
+} // namespace VVE

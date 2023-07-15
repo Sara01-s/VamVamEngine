@@ -6,7 +6,7 @@
 #include <managers/ComponentStorage.hpp>
 /*----------------------------------------------------------------------------------------*/
 
-namespace VamVam {
+namespace VVE {
 
     struct EntityManager_t : public GameContext_t {
 
@@ -30,5 +30,5 @@ namespace VamVam {
 
     };
 
-}; // namespace VamVam
+}; // namespace VVE
 

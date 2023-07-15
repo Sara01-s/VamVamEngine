@@ -4,7 +4,7 @@
 /*----------------------------------------------------------------------------------------*/
 
 
-namespace VamVam {
+namespace VVE {
 
     bool 
     PhysicsSystem_t::Update(GameContext_t& gameContext/*, const float deltaTime*/) const {
@@ -17,4 +17,4 @@ namespace VamVam {
         return true;
     }
 
-} // namespace VamVam
+} // namespace VVE

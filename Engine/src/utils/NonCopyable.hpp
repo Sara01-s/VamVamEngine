@@ -1,6 +1,6 @@
 #pragma once
 
-namespace VamVam {
+namespace VVE {
 
     struct NonCopyable {
 
@@ -12,4 +12,4 @@ namespace VamVam {
 
     };
     
-} // namespace VamVam
+} // namespace VVE

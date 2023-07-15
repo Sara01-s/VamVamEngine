@@ -3,7 +3,7 @@
 #include <utils/Debug.hpp>
 /*----------------------------------------------------------------------------------------*/
 
-namespace VamVam {
+namespace VVE {
 
     bool
     CollisionSystem_t::Update(GameContext_t& gameContext/*, const float deltaTime*/) const {
@@ -29,4 +29,4 @@ namespace VamVam {
         return true;
     }
     
-} // namespace VamVam
+} // namespace VVE

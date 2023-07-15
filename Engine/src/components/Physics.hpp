@@ -3,7 +3,7 @@
 /*----------------------------------------------------------------------------------------*/
 
 
-namespace VamVam {
+namespace VVE {
 
     struct PhysicsComponent_t {
 
@@ -13,4 +13,4 @@ namespace VamVam {
         int32_t  velocityX { 1 },  velocityY { 1 };
     };
     
-} // namespace VamVam
+} // namespace VVE

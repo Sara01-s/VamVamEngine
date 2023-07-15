@@ -3,7 +3,7 @@
 /*----------------------------------------------------------------------------------------*/
 
 
-namespace VamVam {
+namespace VVE {
 
     struct GameContext_t;
 
@@ -15,4 +15,4 @@ namespace VamVam {
 
     };
     
-} // namespace VamVam
+} // namespace VVE

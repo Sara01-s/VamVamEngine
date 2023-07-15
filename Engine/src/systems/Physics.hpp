@@ -3,7 +3,7 @@
 /*----------------------------------------------------------------------------------------*/
 
 
-namespace VamVam {
+namespace VVE {
 
     // tells the compiler that GameContext is a struct. No more details are necessary
     // because RenderSystem only stores a reference to GameContext_t. This is called forward declaration

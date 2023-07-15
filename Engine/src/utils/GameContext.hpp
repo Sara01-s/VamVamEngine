@@ -1,6 +1,6 @@
 #pragma once
 
-namespace VamVam {
+namespace VVE {
 
     struct GameContext_t {
         virtual ~GameContext_t() = default;                         // Destructor marked as virtual because children have to implement their own destructor, this way the pointer who calls the destructor knows which object to delete
@@ -11,4 +11,4 @@ namespace VamVam {
         virtual       std::vector<PhysicsComponent_t>& GetPhysicsComponents()       = 0;
     };
 
-} // namespace VamVam
+} // namespace VVE

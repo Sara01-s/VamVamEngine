@@ -10,7 +10,7 @@ extern "C" {
 /*----------------------------------------------------------------------------------------*/
 
 
-namespace VamVam {
+namespace VVE {
     
     RenderSystem_t::RenderSystem_t(std::string_view gameTitle, uint32_t screenWidth, uint32_t screenHeight)
         : _screenWidth { screenWidth }, _screenHeight { screenHeight }, _screenResolution { _screenWidth * _screenHeight }
@@ -72,4 +72,4 @@ namespace VamVam {
         return !ptc_process_events();
     }
 
-} // namespace VamVam
+} // namespace VVE
